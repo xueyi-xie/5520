@@ -7,14 +7,16 @@ export default function Input() {
     setText(changedText);
   }
   return (
+    <View>
     <TextInput 
       placeholder='Type here' 
       keyboardType='default' 
       style={{borderBottomColor : "Purple"}} 
       value={text} 
-      onChangeText={updateText()}
+      onChangeText={updateText}
       />
-  )
+      </View>
+  );
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
