@@ -4,7 +4,7 @@ import React from 'react'
 export default function Input() {
   const [text, setText] = useState("");
   function updateText(changedText){
-    setText(changedText)
+    setText(changedText);
   }
   return (
     <TextInput 
@@ -12,9 +12,7 @@ export default function Input() {
       keyboardType='default' 
       style={{borderBottomColor : "Purple"}} 
       value={text} 
-      onChangeText={function (changedText) {
-        setText(changedText);
-      }}
+      onChangeText={updateText()}
       />
   )
 }
