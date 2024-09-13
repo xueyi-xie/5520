@@ -1,5 +1,5 @@
-import { StyleSheet, TextInput, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, TextInput, View } from 'react-native'
+import React, { useState } from 'react'
 
 export default function Input() {
   const [text, setText] = useState("");
@@ -8,13 +8,13 @@ export default function Input() {
   }
   return (
     <View>
-    <TextInput 
-      placeholder='Type here' 
-      keyboardType='default' 
-      style={{borderBottomColor : "Purple"}} 
-      value={text} 
-      onChangeText={updateText}
-      />
+      <TextInput 
+        placeholder='Type here' 
+        keyboardType='default' 
+        style={{borderBottomColor : "Purple"}} 
+        value={text} 
+        onChangeText={updateText}
+        />
       </View>
   );
 }
