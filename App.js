@@ -6,16 +6,15 @@ import Input from "./Components/Input";
 
 export default function App() {
   const appName = "Xueyi's first mobile app";
+  const focus = true;
+  
   
   
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Header name={appName}/>
-      <Input
-      />
-      <Text>{text}</Text>
-
+      <Input shouldFocus={focus} />
     </View>
   );
 }
