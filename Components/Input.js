@@ -3,7 +3,6 @@ import React, { useState, useRef, useEffect} from 'react'
 
 export default function Input({shouldFocus}) {
   const [text, setText] = useState("");
-  const [focus, setFocus] = useState(true);
   const textInputRef = useRef(null);
   
   function updateText(changedText){
@@ -28,6 +27,9 @@ export default function Input({shouldFocus}) {
         onChangeText={updateText} 
         ref={textInputRef} 
         />
+        {text.length > 0 && (
+        <Text>Character count: {text.length}</Text> //Text below the input field that shows character count
+      )}
       </View>
   );
 }
