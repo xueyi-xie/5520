@@ -2,7 +2,7 @@ import { StyleSheet, Text, TextInput, View, Modal, Button } from 'react-native'
 import React, { useState, useRef, useEffect} from 'react'
 
   
-export default function Input({shouldFocus, inputHandler}) {
+export default function Input({shouldFocus, inputHandler, modalVisible}) {
  
   const [text, setText] = useState("");
   const textInputRef = useRef(null);
@@ -16,6 +16,7 @@ export default function Input({shouldFocus, inputHandler}) {
   function handleConfirm(){
     inputHandler(text);
     }
+  
   useEffect(() => {
     if (shouldFocus && textInputRef.current) {
       textInputRef.current.focus(); // Focus the input programmatically
@@ -35,7 +36,7 @@ export default function Input({shouldFocus, inputHandler}) {
   }
 
   return (
-    <Modal animationType="slide">
+    <Modal animationType="slide" visible={modalVisible}>
     <View>
       <TextInput 
         placeholder='Type here' 
