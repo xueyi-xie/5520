@@ -39,9 +39,9 @@ export default function Input({shouldFocus, inputHandler, modalVisible}) {
     <Modal animationType="slide" visible={modalVisible}>
     <View>
       <TextInput 
+        style={styles.inputStyle}
         placeholder='Type here' 
         keyboardType='default' 
-        style={{borderBottomColor : "Purple"}} 
         value={text} 
         onChangeText={updateText}
         ref={textInputRef} 
@@ -65,4 +65,8 @@ export default function Input({shouldFocus, inputHandler, modalVisible}) {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  inputStyle: {
+    color:"blue",
+  }
+});
