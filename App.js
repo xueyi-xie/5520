@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, TextInput, View, Button} from "react-native";
+import { StyleSheet, Text, TextInput, View, Button, SafeAreaView} from "react-native";
 import Header from "./Components/Header";
 import { useState } from "react";
 import Input from "./Components/Input";
@@ -19,18 +19,19 @@ export default function App() {
 
   //prop name is random. eg. inputHandler and then pass it to Input.js
   return (
-    <View style={styles.container}>
+
+    <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.top}>
         <Header name={appName}/>
-        <Input shouldFocus={focus} inputHandler={handleInputData} modalVisible={setModalVisible}/>
+        <Input shouldFocus={focus} inputHandler={handleInputData} modalVisible={modalVisible}/>
         <Button title="add a goal" onPress={handleModal}/>
       </View>
       <View style={styles.bottom}>
         <Text>{data}</Text>
       </View>
 
-    </View>
+    </SafeAreaView>
 
   );
 }
