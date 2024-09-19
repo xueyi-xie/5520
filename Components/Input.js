@@ -56,10 +56,12 @@ export default function Input({shouldFocus, inputHandler, modalVisible}) {
         <Text style={styles.message}>{message}</Text> //show message after input blurs
       )} 
      
+     <View style={styles.buttonStyle}>
       <Button
         title="Confirm"
         onPress={handleConfirm}
       />
+      </View>
     </View>
     </Modal>
   );
@@ -68,5 +70,10 @@ export default function Input({shouldFocus, inputHandler, modalVisible}) {
 const styles = StyleSheet.create({
   inputStyle: {
     color:"blue",
+  },
+  buttonStyle: {
+    width: "30%",
+    backgroundColor:"red",
+    marginVertical: 5,
   }
 });
