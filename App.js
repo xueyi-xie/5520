@@ -9,22 +9,29 @@ export default function App() {
   const focus = true;
   const [data, setData] = useState("")
   const [modalVisible, setModalVisible] = useState(false)
+ 
   function handleInputData(data){
-    console.log(data)
     setData(data)
-    setModalVisible=true
+  }
+  function handleModal(){
+    setModalVisible(true)
   }
 
   //prop name is random. eg. inputHandler and then pass it to Input.js
-  
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Header name={appName}/>
-      <Input shouldFocus={focus} inputHandler={handleInputData} modalVisible={modalVisible}/>
-      <Button title="add a goal" onPress={handleInputData}/>
+      <View style={styles.top}>
+        <Header name={appName}/>
+        <Input shouldFocus={focus} inputHandler={handleInputData} modalVisible={setModalVisible}/>
+        <Button title="add a goal" onPress={handleModal}/>
+      </View>
+      <View style={styles.bottom}>
+        <Text>{data}</Text>
+      </View>
 
     </View>
+
   );
 }
 
@@ -32,7 +39,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    //alignItems: 'center',
     justifyContent: 'center',
   },
+  top:{
+    flex: 1,
+  },
+  bottom:{
+    flex: 4,
+    backgroundColor:"lavender",
+  }
+  
 });
