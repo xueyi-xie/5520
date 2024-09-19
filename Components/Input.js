@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Modal, Button } from 'react-native'
 import React, { useState, useRef, useEffect} from 'react'
 
   
@@ -35,6 +35,7 @@ export default function Input({shouldFocus, inputHandler}) {
   }
 
   return (
+    <Modal animationType="slide">
     <View>
       <TextInput 
         placeholder='Type here' 
@@ -59,6 +60,7 @@ export default function Input({shouldFocus, inputHandler}) {
         onPress={handleConfirm}
       />
     </View>
+    </Modal>
   );
 }
 
