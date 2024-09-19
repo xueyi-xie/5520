@@ -6,6 +6,13 @@ export default function Input() {
   function updateText(changedText){
     setText(changedText);
   }
+  function handleConfirm(){
+    console.log(text)
+  }
+  <Button
+    title="Confirm"
+    onPress={handleConfirm}
+  />
   return (
     <View>
     <TextInput 
