@@ -1,7 +1,7 @@
 import { StyleSheet, TextInput, View } from 'react-native'
 import React from 'react'
 
-export default function Input() {
+export default function Input(inputHandler) {
   const [text, setText] = useState("");
   function updateText(changedText){
     setText(changedText);
@@ -9,20 +9,21 @@ export default function Input() {
   function handleConfirm(){
     console.log(text)
   }
-  <Button
-    title="Confirm"
-    onPress={handleConfirm}
-  />
+
   return (
     <View>
-    <TextInput 
-      placeholder='Type here' 
-      keyboardType='default' 
-      style={{borderBottomColor : "Purple"}} 
-      value={text} 
-      onChangeText={updateText}
+      <TextInput 
+        placeholder='Type here' 
+        keyboardType='default' 
+        style={{borderBottomColor : "Purple"}} 
+        value={text} 
+        onChangeText={updateText}
+      />  
+      <Button
+        title="Confirm"
+        onPress={handleConfirm}
       />
-      </View>
+    </View>
   );
 }
 
