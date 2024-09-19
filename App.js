@@ -6,8 +6,10 @@ import Input from "./Components/Input";
 
 export default function App() {
   const appName = "Xueyi's first mobile app";
-  function handleInputData(){
-    
+  const [data, setData] = useState("")
+  function handleInputData(data){
+    console.log(data)
+    setData(data)
   }
 
   //prop name is random. eg. inputHandler and then pass it to Input.js
