@@ -5,15 +5,17 @@ import Input from './Components/Input';
 
 export default function App() {
   const appName = "Xueyi's first mobile app";
-  
+  function handleInputData(){
+    
+  }
+
+  //prop name is random. eg. inputHandler and then pass it to Input.js
   
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Header name={appName}/>
-      <Input
-      />
-      <Text>{text}</Text>
+      <Input inputHandler={handleInputData}/>
 
     </View>
   );
