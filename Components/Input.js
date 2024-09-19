@@ -8,6 +8,7 @@ export default function Input({shouldFocus, inputHandler, modalVisible}) {
   const textInputRef = useRef(null);
   const [isFocused, setIsFocused] = useState(true);
   const [message, setMessage] = useState(""); // Message to show after blur
+  
 
   
   function updateText(changedText){
@@ -16,6 +17,7 @@ export default function Input({shouldFocus, inputHandler, modalVisible}) {
   function handleConfirm(){
     inputHandler(text);
     }
+
   
   useEffect(() => {
     if (shouldFocus && textInputRef.current) {
