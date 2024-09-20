@@ -28,7 +28,7 @@ export default function Input({ shouldFocus, inputHandler, modalVisible, onCance
         },
         {
           text: "Yes",
-          onPress: onCancel(), // Correctly invoke onCancel to close the modal
+          onPress: () => onCancel(), // Correctly invoke onCancel to close the modal
         },
       ],
       { cancelable: true }
@@ -72,13 +72,15 @@ export default function Input({ shouldFocus, inputHandler, modalVisible, onCance
           <Text style={styles.message}>{message}</Text> // Show message after input blurs
         )}
 
-        <View style={styles.buttonStyle}>
-          <Button title="Confirm" onPress={handleConfirm} />
-        </View>
+        {/* Container for buttons with horizontal layout */}
+        <View style={styles.buttonContainer}>
+          <View style={styles.buttonStyle}>
+            <Button title="Confirm" onPress={handleConfirm} />
+          </View>
 
-        {/* Cancel button */}
-        <View style={styles.buttonStyle}>
-          <Button title="Cancel" onPress={handleCancel} />
+          <View style={styles.buttonStyle}>
+            <Button title="Cancel" onPress={handleCancel} />
+          </View>
         </View>
       </View>
     </Modal>
@@ -95,9 +97,14 @@ const styles = StyleSheet.create({
   inputStyle: {
     color: "blue",
   },
+  buttonContainer: {
+    flexDirection: 'row',  // Align buttons horizontally
+    justifyContent: 'space-between',  // Spread the buttons apart
+    width: '60%',  // Set a width to control spacing
+  },
   buttonStyle: {
-    width: "30%",
-    backgroundColor: "red",
-    marginVertical: 5,
+    flex: 1,  // Make both buttons take equal width
+    marginHorizontal: 5,  // Add space between buttons
+    backgroundColor:"white",
   },
 });
