@@ -13,6 +13,7 @@ export default function Input({ shouldFocus, inputHandler, modalVisible, onCance
 
   function handleConfirm() {
     inputHandler(text);
+    setText(""); // Clear the input after confirming
   }
 
   function handleCancel() {
@@ -28,7 +29,10 @@ export default function Input({ shouldFocus, inputHandler, modalVisible, onCance
         },
         {
           text: "Yes",
-          onPress: () => onCancel(), // Correctly invoke onCancel to close the modal
+          onPress: () => {
+            setText("");  // Clear the input after canceling
+            onCancel();   // Close the modal
+          },
         },
       ],
       { cancelable: true }
@@ -75,7 +79,11 @@ export default function Input({ shouldFocus, inputHandler, modalVisible, onCance
         {/* Container for buttons with horizontal layout */}
         <View style={styles.buttonContainer}>
           <View style={styles.buttonStyle}>
-            <Button title="Confirm" onPress={handleConfirm} />
+            <Button 
+              title="Confirm" 
+              onPress={handleConfirm} 
+              disabled={text.length < 3}  // Disable if fewer than 3 characters
+            />
           </View>
 
           <View style={styles.buttonStyle}>
@@ -98,13 +106,13 @@ const styles = StyleSheet.create({
     color: "blue",
   },
   buttonContainer: {
-    flexDirection: 'row',  // Align buttons horizontally
+    flexDirection: 'row',  
     justifyContent: 'space-between',  // Spread the buttons apart
-    width: '60%',  // Set a width to control spacing
+    width: '60%',  
   },
   buttonStyle: {
-    flex: 1,  // Make both buttons take equal width
-    marginHorizontal: 5,  // Add space between buttons
+    flex: 1,  // 
+    marginHorizontal: 5,  
     backgroundColor:"white",
   },
 });
