@@ -77,12 +77,12 @@ export default function Input({ shouldFocus, inputHandler, modalVisible, onCance
         )}
 
         <Image
-          source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }} // Replace with your image URL
+          source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }} 
           style={styles.image}
-          alt='a randmo picture'
+          alt='a random picture'
         />
         <Image
-          source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }} // Replace with your image URL
+          source={require('./image.png')}
           style={styles.image}
           alt="a random picture"
         />
