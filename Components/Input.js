@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View, Modal, Button, Alert } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Modal, Button, Alert, Image } from 'react-native';
 import React, { useState, useRef, useEffect } from 'react';
 
 export default function Input({ shouldFocus, inputHandler, modalVisible, onCancel }) {
@@ -76,6 +76,18 @@ export default function Input({ shouldFocus, inputHandler, modalVisible, onCance
           <Text style={styles.message}>{message}</Text> // Show message after input blurs
         )}
 
+        <Image
+          source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }} // Replace with your image URL
+          style={styles.image}
+          alt='a randmo picture'
+        />
+        <Image
+          source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }} // Replace with your image URL
+          style={styles.image}
+          alt="a random picture"
+        />
+
+
         {/* Container for buttons with horizontal layout */}
         <View style={styles.buttonContainer}>
           <View style={styles.buttonStyle}>
@@ -114,5 +126,10 @@ const styles = StyleSheet.create({
     flex: 1,  // 
     marginHorizontal: 5,  
     backgroundColor:"white",
+  },
+  image: {
+    width: 100,
+    height: 100,
+    marginVertical: 10, // Add some spacing between images
   },
 });
