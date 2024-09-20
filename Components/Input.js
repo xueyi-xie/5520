@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View, Modal, Button } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Modal, Button, Alert } from 'react-native'
 import React, { useState, useRef, useEffect} from 'react'
 
   
@@ -17,6 +17,22 @@ export default function Input({shouldFocus, inputHandler, modalVisible}) {
   function handleConfirm(){
     inputHandler(text);
     }
+
+  function handleCancel(){
+    const createAlert = () =>
+      Alert.alert('Alert Title', 'My Alert Msg', [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => modalVisible},
+      ]);
+    return(
+      <View style={styles.container}>
+        <Button title={'2-Button Alert'} onPress={createTwoButtonAlert} />
+      </View>);
+  };
 
   
   useEffect(() => {
@@ -39,7 +55,7 @@ export default function Input({shouldFocus, inputHandler, modalVisible}) {
 
   return (
     <Modal animationType="slide" visible={modalVisible}>
-    <View>
+    <View style={styles.container}>
       <TextInput 
         style={styles.inputStyle}
         placeholder='Type here' 
@@ -64,12 +80,22 @@ export default function Input({shouldFocus, inputHandler, modalVisible}) {
         onPress={handleConfirm}
       />
       </View>
+      <Button
+      title="Cancel"
+      onPress={}
+      />
     </View>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fcf",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   inputStyle: {
     color:"blue",
   },
