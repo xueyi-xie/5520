@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView } from "react-native";
+import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView, FlatList } from "react-native";
 import Header from "./Components/Header";
 import { useState } from "react";
 import Input from "./Components/Input";
@@ -9,6 +9,7 @@ export default function App() {
   const focus = true;
   const [data, setData] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [goals, setGoals] = useState([]);
   
 
   function handleInputData(data) {
@@ -46,8 +47,10 @@ export default function App() {
           <Button title="Add a goal" onPress={handleModal} />
         </View>
       </View>
-      
+
       <View style={styles.bottom}>
+        
+        {/*<ScrollView contentContainerStyle={styles.scrollViewContent}>
         {goals.map((goalObj) => {
           return (
             <View key={goalObj.id}>
@@ -55,7 +58,16 @@ export default function App() {
             </View>
           );
           })};
-
+        </ScrollView>*/}
+        <FlatList data={goals} renderItem={(data)=>{
+          console.log(data);
+          return (
+            <View key={data.item.id}>
+              <Text>{data.item.text}</Text>
+            </View>
+          )
+        }}
+        />
         <Text>{data}</Text>
       </View>
     </SafeAreaView>
@@ -84,4 +96,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     width: "80%",
   },
+  scrollViewContent: {
+    alignItems: "center",
+  }
 });
