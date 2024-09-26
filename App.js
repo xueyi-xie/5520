@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView, FlatList } fr
 import Header from "./Components/Header";
 import { useState } from "react";
 import Input from "./Components/Input";
+import GoalItem from "./Components/GoalItem";
 
 export default function App() {
   const appName = "My first mobile app";
@@ -59,12 +60,15 @@ export default function App() {
           );
           })};
         </ScrollView>*/}
-        <FlatList data={goals} renderItem={(data)=>{
-          console.log(data);
+        <FlatList data={goals} renderItem={({item})=>{
+          console.log(item);
           return (
-            <View key={data.item.id}>
-              <Text>{data.item.text}</Text>
+            /*
+            <View key={item.id}>
+              <Text>{item.text}</Text>
             </View>
+            */
+           <GoalItem goals={item}/>
           )
         }}
         />
