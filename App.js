@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView } from "react-native";
 import Header from "./Components/Header";
 import { useState } from "react";
 import Input from "./Components/Input";
@@ -9,8 +9,16 @@ export default function App() {
   const focus = true;
   const [data, setData] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  
 
   function handleInputData(data) {
+    let newGoal={text: data, id: Math.random()};
+    //const newArray=[...goals, newGoal];
+    //setGoals(newArray);
+    setGoals((prevGoals)=>{
+      return [...prevGoals, newGoal]
+    });
+
     setData(data);
   }
 
@@ -38,7 +46,16 @@ export default function App() {
           <Button title="Add a goal" onPress={handleModal} />
         </View>
       </View>
+      
       <View style={styles.bottom}>
+        {goals.map((goalObj) => {
+          return (
+            <View key={goalObj.id}>
+              <Text>{goalObj.text}</Text>
+            </View>
+          );
+          })};
+
         <Text>{data}</Text>
       </View>
     </SafeAreaView>
