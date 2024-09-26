@@ -32,6 +32,11 @@ export default function App() {
     setModalVisible(false); // Hide the modal
   }
 
+  function goalDeleteHandler(deletedID){
+    //need ID to filter array
+    
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -68,7 +73,7 @@ export default function App() {
               <Text>{item.text}</Text>
             </View>
             */
-           <GoalItem goals={item}/>
+           <GoalItem goals={item} handleDelete={goalDeleteHandler}/>
           )
         }}
         />
