@@ -69,7 +69,7 @@ export default function App() {
         </ScrollView>*/}
 
         <SafeAreaView style={styles.listContainer}>
-          {listCount===0 ? <Text>{"No goals to show"}</Text>:<Text>{"My Goal List"}</Text>}
+          {/*{listCount===0 ? <Text>{"No goals to show"}</Text>:<Text>{"My Goal List"}</Text>}*/}
           {/*if (listCount=0){
             <Text>No goals to show</Text>
           } else {
@@ -86,9 +86,11 @@ export default function App() {
            <GoalItem goal={item} handleDelete={goalDeleteHandler}/>
           )
         }}
+        ListEmptyComponent={<Text>{"No goals to show"}</Text>}
+        ListHeaderComponent={<Text>{"My Goals"}</Text>}
         />
         </SafeAreaView>
-        <Text>{data}</Text>
+        {/*<Text>{data}</Text>*/}
       </View>
     </SafeAreaView>
   );
