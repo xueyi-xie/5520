@@ -11,12 +11,14 @@ export default function App() {
   const [data, setData] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
+  const [listCount, setListCount] = useState(0);
   
 
   function handleInputData(data) {
     let newGoal={text: data, id: Math.random()};
     //const newArray=[...goals, newGoal];
     //setGoals(newArray);
+    setListCount(listCount+1);
     setGoals((prevGoals)=>{
       return [...prevGoals, newGoal]
     });
@@ -34,7 +36,7 @@ export default function App() {
 
   function goalDeleteHandler(deletedID){
     //need ID to filter array
-    
+
   }
 
   return (
@@ -65,6 +67,14 @@ export default function App() {
           );
           })};
         </ScrollView>*/}
+
+        <SafeAreaView style={styles.listContainer}>
+          {listCount===0 ? <Text>{"No goals to show"}</Text>:<Text>{"My Goal List"}</Text>}
+          {/*if (listCount=0){
+            <Text>No goals to show</Text>
+          } else {
+            <Text>My Goal List</Text>
+          };*/}
         <FlatList data={goals} renderItem={({item})=>{
           console.log(item);
           return (
@@ -73,10 +83,11 @@ export default function App() {
               <Text>{item.text}</Text>
             </View>
             */
-           <GoalItem goals={item} handleDelete={goalDeleteHandler}/>
+           <GoalItem goal={item} handleDelete={goalDeleteHandler}/>
           )
         }}
         />
+        </SafeAreaView>
         <Text>{data}</Text>
       </View>
     </SafeAreaView>
@@ -84,6 +95,9 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  listContainer: {
+    flex: 1,
+  }, 
   container: {
     flex: 1,
     backgroundColor: "#fff",
