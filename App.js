@@ -108,8 +108,8 @@ export default function App() {
            <GoalItem goal={item} handleDelete={goalDeleteHandler}/>
           )
         }}
-        ListEmptyComponent={<Text>{"No goals to show"}</Text>}
-        ListHeaderComponent={listCount>0 ? <Text>{"My Goals"}</Text>:null}
+        ListEmptyComponent={<Text style={styles.text}>{"No goals to show"}</Text>}
+        ListHeaderComponent={listCount>0 ? <Text style={styles.text}>{"My Goals"}</Text>:null}
         ListFooterComponent={listCount>0 ? <Button title="Delete All" onPress={handleDeleteAll}/> : null}
         ItemSeparatorComponent={listSeparator}
         />
@@ -121,6 +121,10 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  text: {
+    color: "purple",
+    fontSize: 20,
+  },
   listContainer: {
     flex: 1,
   }, 
@@ -139,18 +143,19 @@ const styles = StyleSheet.create({
     flex: 4,
     backgroundColor: "#dcd",
     alignItems: "center",
+
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
-    width: "80%",
+    justifyContent: "center",
   },
   scrollViewContent: {
+    flex: 1,
     alignItems: "center",
   }, 
   separator: {
-    height: 1,
+    height: 5,
     width: '100%',
-    backgroundColor: '#CCC',
+    backgroundColor: 'black',
     },
 });
