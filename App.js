@@ -55,7 +55,10 @@ export default function App() {
   ],
   {cancelable: true},
   )
-    
+  }
+
+  const listSeparator = () => {
+    return <View style={ styles.separator } />
   }
 
   return (
@@ -108,6 +111,7 @@ export default function App() {
         ListEmptyComponent={<Text>{"No goals to show"}</Text>}
         ListHeaderComponent={listCount>0 ? <Text>{"My Goals"}</Text>:null}
         ListFooterComponent={listCount>0 ? <Button title="Delete All" onPress={handleDeleteAll}/> : null}
+        ItemSeparatorComponent={listSeparator}
         />
         </SafeAreaView>
         {/*<Text>{data}</Text>*/}
@@ -143,5 +147,10 @@ const styles = StyleSheet.create({
   },
   scrollViewContent: {
     alignItems: "center",
-  }
+  }, 
+  separator: {
+    height: 1,
+    width: '100%',
+    backgroundColor: '#CCC',
+    },
 });
