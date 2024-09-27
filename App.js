@@ -87,7 +87,7 @@ export default function App() {
           )
         }}
         ListEmptyComponent={<Text>{"No goals to show"}</Text>}
-        ListHeaderComponent={<Text>{"My Goals"}</Text>}
+        ListHeaderComponent={listCount>0 ? <Text>{"My Goals"}</Text>:null}
         />
         </SafeAreaView>
         {/*<Text>{data}</Text>*/}
