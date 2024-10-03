@@ -7,7 +7,7 @@ import Input from './Input';
 import GoalItem from './GoalItem';
 
 
-export default function Home() {
+export default function Home({ navigation }) {
     const appName = "My first mobile app";
     const focus = true;
     const [data, setData] = useState("");
