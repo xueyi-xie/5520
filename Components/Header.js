@@ -13,6 +13,8 @@ const styles = StyleSheet.create({
     color: "purple",
     fontSize: 25,
     borderColor: "purple",
+    borderWidth:2,
+    marginBottom:10
   }
 });
 
