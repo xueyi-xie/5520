@@ -10,8 +10,13 @@ export default function App() {
   return(
   <NavigationContainer>
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home}/>
-      <Stack.Screen name="Details" component={GoalDetails}/>
+      <Stack.Screen name="Home" component={Home} options={{title: "Home Page", headerStyle: {backgroundColor:"purple"}, headerTintColor: "white"}}/>
+      <Stack.Screen name="Details" component={GoalDetails}
+      options={({navigation, route})=>{return {
+        title:route.params ? route.params.goalObj.text : "More details",
+        };
+        }}
+      />
     </Stack.Navigator>
   </NavigationContainer>
   );
