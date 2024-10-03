@@ -1,16 +1,26 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView, FlatList } from "react-native";
 import Header from "./Components/Header";
 import { useState } from "react";
 import Input from "./Components/Input";
+import GoalItem from "./Components/GoalItem";
 
 export default function App() {
   const appName = "My first mobile app";
   const focus = true;
   const [data, setData] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [goals, setGoals] = useState([]);
+  
 
   function handleInputData(data) {
+    let newGoal={text: data, id: Math.random()};
+    //const newArray=[...goals, newGoal];
+    //setGoals(newArray);
+    setGoals((prevGoals)=>{
+      return [...prevGoals, newGoal]
+    });
+
     setData(data);
   }
 
@@ -20,6 +30,11 @@ export default function App() {
 
   function handleCancelModal() {
     setModalVisible(false); // Hide the modal
+  }
+
+  function goalDeleteHandler(deletedID){
+    //need ID to filter array
+    
   }
 
   return (
@@ -38,7 +53,30 @@ export default function App() {
           <Button title="Add a goal" onPress={handleModal} />
         </View>
       </View>
+
       <View style={styles.bottom}>
+        
+        {/*<ScrollView contentContainerStyle={styles.scrollViewContent}>
+        {goals.map((goalObj) => {
+          return (
+            <View key={goalObj.id}>
+              <Text>{goalObj.text}</Text>
+            </View>
+          );
+          })};
+        </ScrollView>*/}
+        <FlatList data={goals} renderItem={({item})=>{
+          console.log(item);
+          return (
+            /*
+            <View key={item.id}>
+              <Text>{item.text}</Text>
+            </View>
+            */
+           <GoalItem goals={item} handleDelete={goalDeleteHandler}/>
+          )
+        }}
+        />
         <Text>{data}</Text>
       </View>
     </SafeAreaView>
@@ -67,4 +105,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     width: "80%",
   },
+  scrollViewContent: {
+    alignItems: "center",
+  }
 });
