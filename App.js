@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView, FlatList } from "react-native";
+import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView, FlatList, Alert } from "react-native";
 import Header from "./Components/Header";
 import { useState } from "react";
 import Input from "./Components/Input";
@@ -11,12 +11,14 @@ export default function App() {
   const [data, setData] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
+  const [listCount, setListCount] = useState(0);
   
 
   function handleInputData(data) {
     let newGoal={text: data, id: Math.random()};
     //const newArray=[...goals, newGoal];
     //setGoals(newArray);
+    setListCount(listCount+1);
     setGoals((prevGoals)=>{
       return [...prevGoals, newGoal]
     });
@@ -34,7 +36,29 @@ export default function App() {
 
   function goalDeleteHandler(deletedID){
     //need ID to filter array
-    
+
+  }
+
+  function handleDeleteAll(){
+    Alert.alert(
+      "Delete all", 
+      "Are you sure?",
+      [{text: "No",
+        onPress: () => console.log("Action cancelled"), 
+      }, 
+    {text: "Yes",
+      onPress: () => {
+        setGoals([]);
+        setListCount(0);
+      },
+    },
+  ],
+  {cancelable: true},
+  )
+  }
+
+  const listSeparator = () => {
+    return <View style={ styles.separator } />
   }
 
   return (
@@ -65,6 +89,14 @@ export default function App() {
           );
           })};
         </ScrollView>*/}
+
+        <SafeAreaView style={styles.listContainer}>
+          {/*{listCount===0 ? <Text>{"No goals to show"}</Text>:<Text>{"My Goal List"}</Text>}*/}
+          {/*if (listCount=0){
+            <Text>No goals to show</Text>
+          } else {
+            <Text>My Goal List</Text>
+          };*/}
         <FlatList data={goals} renderItem={({item})=>{
           console.log(item);
           return (
@@ -73,17 +105,29 @@ export default function App() {
               <Text>{item.text}</Text>
             </View>
             */
-           <GoalItem goals={item} handleDelete={goalDeleteHandler}/>
+           <GoalItem goal={item} handleDelete={goalDeleteHandler}/>
           )
         }}
+        ListEmptyComponent={<Text style={styles.text}>{"No goals to show"}</Text>}
+        ListHeaderComponent={listCount>0 ? <Text style={styles.text}>{"My Goals"}</Text>:null}
+        ListFooterComponent={listCount>0 ? <Button title="Delete All" onPress={handleDeleteAll}/> : null}
+        ItemSeparatorComponent={listSeparator}
         />
-        <Text>{data}</Text>
+        </SafeAreaView>
+        {/*<Text>{data}</Text>*/}
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  text: {
+    color: "purple",
+    fontSize: 20,
+  },
+  listContainer: {
+    flex: 1,
+  }, 
   container: {
     flex: 1,
     backgroundColor: "#fff",
@@ -99,13 +143,19 @@ const styles = StyleSheet.create({
     flex: 4,
     backgroundColor: "#dcd",
     alignItems: "center",
+
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
-    width: "80%",
+    justifyContent: "center",
   },
   scrollViewContent: {
+    flex: 1,
     alignItems: "center",
-  }
+  }, 
+  separator: {
+    height: 5,
+    width: '100%',
+    backgroundColor: 'black',
+    },
 });
