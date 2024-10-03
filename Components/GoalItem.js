@@ -14,7 +14,7 @@ export default function GoalItem({goal, handleDelete, handlePress}) {
       <Button
       title="i"
       onPress={()=>{
-        handlePress();
+        handlePress(goal);
         }}
       />
     </View>

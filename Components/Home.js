@@ -41,8 +41,8 @@ export default function Home({ navigation }) {
       setGoals((prevGoals=>{return prevGoals.filter((goal)=>{return goal.id != deletedID})}))
     }
 
-    function goalPressHandler(){
-        navigation.navigate("Details")
+    function goalPressHandler(pressedGoal){
+        navigation.navigate("Details", {goalObj: pressedGoal});
     }
   
     function handleDeleteAll(){
@@ -85,7 +85,6 @@ export default function Home({ navigation }) {
         </View>
   
         <View style={styles.bottom}>
-          
           {/*<ScrollView contentContainerStyle={styles.scrollViewContent}>
           {goals.map((goalObj) => {
             return (
@@ -130,6 +129,8 @@ const styles = StyleSheet.create({
     text: {
         color: "purple",
         fontSize: 20,
+        alignItems: "center",
+        justifyContent: "center",
       },
       listContainer: {
         flex: 1,
@@ -139,25 +140,32 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         alignItems: "center",
         justifyContent: "center",
+        width: '100%',
       },
       top: {
         flex: 1,
         alignItems: "center",
         justifyContent: "space-evenly",
+        width:'100%',
       },
+
       bottom: {
         flex: 4,
         backgroundColor: "#dcd",
         alignItems: "center",
-    
+        width:'100%',
+        justifyContent: "center",
       },
+
       buttonContainer: {
         flexDirection: "row",
         justifyContent: "center",
+        alignItems: "center",
       },
       scrollViewContent: {
         flex: 1,
         alignItems: "center",
+        justifyContent: "center",
       }, 
       separator: {
         height: 5,
