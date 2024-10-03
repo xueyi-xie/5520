@@ -40,6 +40,10 @@ export default function Home({ navigation }) {
       //need ID to filter array
       setGoals((prevGoals=>{return prevGoals.filter((goal)=>{return goal.id != deletedID})}))
     }
+
+    function goalPressHandler(){
+        navigation.navigate("Details")
+    }
   
     function handleDeleteAll(){
       Alert.alert(
@@ -107,7 +111,7 @@ export default function Home({ navigation }) {
                 <Text>{item.text}</Text>
               </View>
               */
-             <GoalItem goal={item} handleDelete={goalDeleteHandler}/>
+             <GoalItem goal={item} handleDelete={goalDeleteHandler} handlePress={goalPressHandler}/>
             )
           }}
           ListEmptyComponent={<Text style={styles.text}>{"No goals to show"}</Text>}
