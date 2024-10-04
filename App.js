@@ -5,6 +5,7 @@ import GoalDetails from "./Components/GoalDetails";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Button } from "react-native";
+import Warning from "./Components/Warning";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -19,11 +20,20 @@ export default function App() {
       component={GoalDetails}
       options={({navigation, route})=>{return {
         title:route.params ? route.params.goalObj.text : "More details",
-        headerRight: ()=>{return <Button title="Warning" color="white"/>}
-        };
-        }
-      }
+         headerRight: ()=>(<Button
+          title="Warning"
+          onPress={() => {
+            navigation.setOptions({ title: "Warning" }); 
+            navigation.navigate("Warning"); // Navigate to Warning screen
+          }}
+          color="white"
+        />)
+      }}}
       />
+      <Stack.Screen 
+      name="Warning"
+      component={Warning}
+      options={{}}/>
     </Stack.Navigator>
   </NavigationContainer>
   );
