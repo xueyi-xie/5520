@@ -8,6 +8,10 @@ export default function GoalItem({ goalObj, handleDelete }) {
   return (
     <View style={styles.textContainer}>
       <Pressable
+        android_ripple={{ color: "purple" }}
+        style={({pressed})=>{
+          return [styles.horizontalContainer, pressed && styles.pressed];
+        }}
         onPress={() => {
           navigation.navigate("Details", { goalObj });
         }}
@@ -36,7 +40,7 @@ export default function GoalItem({ goalObj, handleDelete }) {
 const styles = StyleSheet.create({
   text: {
     color: "purple",
-    fontSize: 35,
+    fontSize: 25,
     padding: 5,
   },
   textContainer: {
@@ -45,5 +49,14 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     flexDirection: "row",
     alignItems: "center",
+  },
+  horizontalContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "80%",
+  },
+  pressed: {
+    opacity: 0.5,
+    color: "purple",
   },
 });
