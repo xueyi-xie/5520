@@ -12,6 +12,7 @@ import Header from "./Header";
 import { useState } from "react";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
+import PressableButton from "./PressableButton";
 
 export default function Home({ navigation }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -67,6 +68,13 @@ export default function Home({ navigation }) {
       <StatusBar style="auto" />
       <View style={styles.topView}>
         <Header name={appName} />
+        <PressableButton
+          pressFunction={handleInputData}
+          componentStyle={styles.defaultButton}
+          pressedStyle={styles.pressed}
+        >
+          
+        </PressableButton>
         <Button
           title="Add a Goal"
           onPress={() => {
@@ -143,5 +151,10 @@ const styles = StyleSheet.create({
 
   scrollViewContent: {
     alignItems: "center",
+  },
+
+  pressed: {
+    opacity: 0.5,
+    color: "purple",
   },
 });

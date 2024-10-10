@@ -25,6 +25,14 @@ export default function GoalItem({ goalObj, handleDelete }) {
       >
         <Text>X</Text>
       </PressableButton>
+      <PressableButton
+        pressFunction={()=> {navigation.navigate("Details", { goalObj });}}
+        componentStyle={styles.detailContainer}
+        pressedStyle={styles.pressed}
+      >
+        <Text>i</Text>
+      </PressableButton>
+        
       {/* 
       <Button
         title="X"
@@ -70,6 +78,17 @@ const styles = StyleSheet.create({
     color: "purple",
   },
   deleteContainer: {
-    backgroundColor:'grey',
+    backgroundColor:'red',
+    width: 20,
+    height: '60%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
+  detailContainer: {
+    backgroundColor: 'beige',
+    width: 20,
+    height: '60%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });
