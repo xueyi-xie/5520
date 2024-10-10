@@ -17,6 +17,15 @@ export default function GoalItem({ goalObj, handleDelete }) {
         onPress={() => {
           navigation.navigate("Details", { goalObj });
         }}
+        onLongPress={() => {Alert.alert("Delete", "Are you sure you want to delete", [
+          { text: "delete"},
+          {
+            text: "ok",
+            onPress: () => {
+              handleDelete(goalObj.id);
+            },
+          },
+        ]);}}
       >
       <Text style={styles.text}>{goalObj.text}</Text>
       
