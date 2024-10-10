@@ -110,7 +110,7 @@ export default function Home({ navigation }) {
                 <Text>{item.text}</Text>
               </View>
               */
-             <GoalItem goal={item} handleDelete={goalDeleteHandler} handlePress={goalPressHandler}/>
+             <GoalItem goal={item} handleDelete={goalDeleteHandler}/>
             )
           }}
           ListEmptyComponent={<Text style={styles.text}>{"No goals to show"}</Text>}
