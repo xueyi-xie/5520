@@ -69,18 +69,19 @@ export default function Home({ navigation }) {
       <View style={styles.topView}>
         <Header name={appName} />
         <PressableButton
-          pressFunction={handleInputData}
-          componentStyle={styles.defaultButton}
+          pressFunction={() => {
+            setIsModalVisible(true);}}
+          componentStyle={styles.buttonContainer}
           pressedStyle={styles.pressed}
         >
-          
+          <Text>Add a Goal</Text>
         </PressableButton>
-        <Button
+        {/*<Button
           title="Add a Goal"
           onPress={() => {
             setIsModalVisible(true);
           }}
-        />
+        />*/}
       </View>
       <Input
         textInputFocus={true}
@@ -140,6 +141,13 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     justifyContent: "center",
   },
+  buttonContainer: {
+    backgroundColor: 'purple',
+    color: 'white',
+    fontSize: 35,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   header: {
     color: "indigo",
     fontSize: 25,
@@ -155,6 +163,6 @@ const styles = StyleSheet.create({
 
   pressed: {
     opacity: 0.5,
-    color: "purple",
+    backgroundColor: "lavender",
   },
 });
