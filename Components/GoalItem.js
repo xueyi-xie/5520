@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import PressableButton from "./PressableButton";
 import AntDesign from '@expo/vector-icons/AntDesign';
 
-export default function GoalItem({ goalObj, handleDelete, separator, index}) {
+export default function GoalItem({ goalObj, handleDelete, separator}) {
   const navigation = useNavigation();
 
   return (

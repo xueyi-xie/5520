@@ -117,12 +117,11 @@ export default function Home({ navigation }) {
             />
           )}
         
-          renderItem={({ item, index, separators }) => (
+          renderItem={({ item, separators }) => (
               <GoalItem
                 goalObj={item}
                 handleDelete={goalDeleteHandler}
                 separator={separators}
-                index={index}
               />
           )}
           
