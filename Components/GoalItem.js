@@ -1,10 +1,10 @@
-import { Button, Pressable, StyleSheet, Text, View } from "react-native";
+import { Button, Pressable, StyleSheet, Text, View, Alert } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import PressableButton from "./PressableButton";
 import AntDesign from '@expo/vector-icons/AntDesign';
 
-export default function GoalItem({ goalObj, handleDelete }) {
+export default function GoalItem({ goalObj, handleDelete, separator, index}) {
   const navigation = useNavigation();
 
   return (
@@ -18,16 +18,17 @@ export default function GoalItem({ goalObj, handleDelete }) {
           navigation.navigate("Details", { goalObj });
         }}
         onLongPress={() => {Alert.alert("Delete", "Are you sure you want to delete", [
-          { text: "delete"},
-          {
-            text: "ok",
+          { text: "cancel", style: "cancel" },
+          {text: "delete",
             onPress: () => {
               handleDelete(goalObj.id);
             },
           },
         ]);}}
+        onPressIn={()=>separator.highlight()} // Highlight separator on press
+        onPressOut={() => separator.unhighlight()} // Unhighlight separator when released
       >
-      <Text style={styles.text}>{goalObj.text}</Text>
+        <Text style={styles.text}>{goalObj.text}</Text>
       
       <PressableButton 
         pressFunction={()=> {handleDelete(goalObj.id);}}
@@ -43,7 +44,7 @@ export default function GoalItem({ goalObj, handleDelete }) {
       >
         <AntDesign name="infocirlce" size={24} color="black" />
       </PressableButton>
-        
+      </Pressable>
       {/* 
       <Button
         title="X"
@@ -61,7 +62,7 @@ export default function GoalItem({ goalObj, handleDelete }) {
         color="grey"
       />
       */}
-      </Pressable>
+      
     </View>
   );
 }
