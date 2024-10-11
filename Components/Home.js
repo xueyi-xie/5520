@@ -7,6 +7,8 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableHighlight,
+  Pressable,
 } from "react-native";
 import Header from "./Header";
 import { useState } from "react";
@@ -17,6 +19,7 @@ import PressableButton from "./PressableButton";
 export default function Home({ navigation }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
+  const [selectedGoalId, setSelectedGoalId] = useState(null);
   const appName = "My app";
   //update this fn to receive data
   function handleInputData(data) {
@@ -100,25 +103,29 @@ export default function Home({ navigation }) {
           ListFooterComponent={
             goals.length && <Button title="Delete all" onPress={deleteAll} />
           }
-          ItemSeparatorComponent={
+          
+
+          contentContainerStyle={styles.scrollViewContent}
+          data={goals}
+
+          ItemSeparatorComponent={({ highlighted }) => (
             <View
               style={{
                 height: 5,
-                backgroundColor: "gray",
+                backgroundColor: highlighted ? "red" : "gray", // Change separator color based on highlighted prop
               }}
             />
-          }
-          contentContainerStyle={styles.scrollViewContent}
-          data={goals}
-          renderItem={({ item }) => {
-            return (
+          )}
+        
+          renderItem={({ item, index, separators }) => (
               <GoalItem
                 goalObj={item}
                 handleDelete={goalDeleteHandler}
-                // handlePress={goalPressHandler}
+                separator={separators}
+                index={index}
               />
-            );
-          }}
+          )}
+          
         />
         {/* <ScrollView contentContainerStyle={styles.scrollViewContent}>
           {goals.map((goalObj) => {
