@@ -31,7 +31,7 @@ export default function Home({ navigation }) {
   //querySnapshot is a list of document snapshots. we name it so 
   //.data() function gets data from document
   useEffect(() => {
-    onSnapshot(collection(database, 'goals'), (querySnapshot) => {
+    const unsubscribe = onSnapshot(collection(database, 'goals'), (querySnapshot) => {
       //define an array
       let goalsArray = [];
       querySnapshot.forEach((doc)=>{
@@ -40,7 +40,11 @@ export default function Home({ navigation }) {
         console.log(doc.data().id)});
         //set goals with this array
         setGoals(goalsArray);
+
       });
+      //detach listener
+      return () => unsubscribe();
+
   }, []);//one time thing, use square brackets
 
 
