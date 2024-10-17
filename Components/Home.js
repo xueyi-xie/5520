@@ -11,27 +11,59 @@ import {
   Pressable,
 } from "react-native";
 import Header from "./Header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
+import { app } from "./Firebase/firebaseSetUp";
+import { database } from "./Firebase/firebaseSetUp";
+import { deleteAllFromDB, deleteFromDB, writeToDB } from "./Firebase/firestoreHelper";
+import { collection, getDocs, onSnapshot } from "firebase/firestore";
 
 export default function Home({ navigation }) {
+  console.log(database);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
   const [selectedGoalId, setSelectedGoalId] = useState(null);
   const appName = "My app";
+
+
+  //querySnapshot is a list of document snapshots. we name it so 
+  //.data() function gets data from document
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(database, 'goals'), (querySnapshot) => {
+      //define an array
+      let goalsArray = [];
+      querySnapshot.forEach((doc)=>{
+        //populate array
+        goalsArray.push({...doc.data(), id: doc.id});
+        console.log(doc.data().id)});
+        //set goals with this array
+        setGoals(goalsArray);
+
+      });
+      //detach listener
+      //forgot to switch branch before pushing
+      return () => unsubscribe();
+
+  }, []);//one time thing, use square brackets
+
+
+
+
   //update this fn to receive data
   function handleInputData(data) {
-    //log the data to console
-    console.log("App ", data);
-    // declare a JS object
-    let newGoal = { text: data, id: Math.random() };
+    let newGoal = { text: data};
     // update the goals array to have newGoal as an item
     //async
-    setGoals((prevGoals) => {
+    //add newGoal to db, call writeToDB
+    writeToDB("goals", newGoal);
+
+    {/*setGoals((prevGoals) => {
       return [...prevGoals, newGoal];
     });
+    */}
+
     //updated goals is not accessible here
     setIsModalVisible(false);
   }
@@ -39,22 +71,14 @@ export default function Home({ navigation }) {
     setIsModalVisible(false);
   }
 
-  // function goalPressHandler(pressedGoal) {
-  //   //which goal?
-  //   console.log("goal pressed");
-  //   navigation.navigate("Details", { goalObj: pressedGoal });
-  // }
-  function goalDeleteHandler(deletedId) {
-    console.log("goal deleted ", deletedId);
-    //Use array.filter to update the array by removing the deletedId
 
-    setGoals((prevGoals) => {
-      return prevGoals.filter((goal) => {
-        return goal.id != deletedId;
-      });
-    });
+  function goalDeleteHandler(deletedId) {
+
+    deleteFromDB("goals", deletedId);
   }
+
   function deleteAll() {
+    {/*}
     Alert.alert("Delete All", "Are you sure you want to delete all goals?", [
       {
         text: "Yes",
@@ -64,6 +88,8 @@ export default function Home({ navigation }) {
       },
       { text: "No", style: "cancel" },
     ]);
+    */}
+  deleteAllFromDB("goals");
   }
 
   return (
