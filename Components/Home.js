@@ -43,6 +43,7 @@ export default function Home({ navigation }) {
 
       });
       //detach listener
+      //forgot to switch branch before pushing
       return () => unsubscribe();
 
   }, []);//one time thing, use square brackets
@@ -52,9 +53,6 @@ export default function Home({ navigation }) {
 
   //update this fn to receive data
   function handleInputData(data) {
-    //log the data to console
-    //console.log("App ", data);
-    // declare a JS object
     let newGoal = { text: data};
     // update the goals array to have newGoal as an item
     //async
@@ -73,20 +71,9 @@ export default function Home({ navigation }) {
     setIsModalVisible(false);
   }
 
-  // function goalPressHandler(pressedGoal) {
-  //   //which goal?
-  //   console.log("goal pressed");
-  //   navigation.navigate("Details", { goalObj: pressedGoal });
-  // }
+
   function goalDeleteHandler(deletedId) {
-    //console.log("goal deleted ", deletedId);
-    //Use array.filter to update the array by removing the deletedId
-    {/*setGoals((prevGoals) => {
-      return prevGoals.filter((goal) => {
-        return goal.id != deletedId;
-      });
-    });
-    */}
+
     deleteFromDB("goals", deletedId);
   }
 
