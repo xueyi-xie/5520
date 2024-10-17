@@ -1,9 +1,10 @@
-import { Button, Pressable, StyleSheet, Text, View } from "react-native";
+import { Button, Pressable, StyleSheet, Text, View, Alert } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import PressableButton from "./PressableButton";
+import AntDesign from '@expo/vector-icons/AntDesign';
 
-export default function GoalItem({ goalObj, handleDelete }) {
+export default function GoalItem({ goalObj, handleDelete, separator}) {
   const navigation = useNavigation();
 
   return (
@@ -16,23 +17,34 @@ export default function GoalItem({ goalObj, handleDelete }) {
         onPress={() => {
           navigation.navigate("Details", { goalObj });
         }}
+        onLongPress={() => {Alert.alert("Delete", "Are you sure you want to delete", [
+          { text: "cancel", style: "cancel" },
+          {text: "delete",
+            onPress: () => {
+              handleDelete(goalObj.id);
+            },
+          },
+        ]);}}
+        onPressIn={()=>separator.highlight()} // Highlight separator on press
+        onPressOut={() => separator.unhighlight()} // Unhighlight separator when released
       >
-      <Text style={styles.text}>{goalObj.text}</Text>
+        <Text style={styles.text}>{goalObj.text}</Text>
+      
       <PressableButton 
         pressFunction={()=> {handleDelete(goalObj.id);}}
         componentStyle={styles.deleteContainer}
         pressedStyle={styles.pressed}
       >
-        <Text>X</Text>
+        <AntDesign name="delete" size={24} color="black" />
       </PressableButton>
       <PressableButton
         pressFunction={()=> {navigation.navigate("Details", { goalObj });}}
         componentStyle={styles.detailContainer}
         pressedStyle={styles.pressed}
       >
-        <Text>i</Text>
+        <AntDesign name="infocirlce" size={24} color="black" />
       </PressableButton>
-        
+      </Pressable>
       {/* 
       <Button
         title="X"
@@ -50,7 +62,7 @@ export default function GoalItem({ goalObj, handleDelete }) {
         color="grey"
       />
       */}
-      </Pressable>
+      
     </View>
   );
 }
@@ -67,26 +79,28 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
   },
   horizontalContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    width: "80%",
+    justifyContent: "center",
+    alignItems: "center",
+    //width: "100%",
   },
   pressed: {
     opacity: 0.5,
-    color: "purple",
+    backgroundColor: "lavender",
   },
   deleteContainer: {
     backgroundColor:'red',
-    width: 20,
+    width: 25,
     height: '60%',
     justifyContent: 'center',
     alignItems: 'center',
   },
   detailContainer: {
     backgroundColor: 'beige',
-    width: 20,
+    width: 25,
     height: '60%',
     justifyContent: 'center',
     alignItems: 'center',
