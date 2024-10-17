@@ -16,9 +16,11 @@ import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
 import { app } from "./Firebase/firebaseSetUp";
+import { database } from "./Firebase/firebaseSetUp";
+import { writeToDB } from "./Firebase/firestoreHelper";
 
 export default function Home({ navigation }) {
-  console.log(app);
+  console.log(database);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
   const [selectedGoalId, setSelectedGoalId] = useState(null);
@@ -31,6 +33,9 @@ export default function Home({ navigation }) {
     let newGoal = { text: data, id: Math.random() };
     // update the goals array to have newGoal as an item
     //async
+    //add newGoal to db, call writeToDB
+    writeToDB("goals", newGoal);
+
     setGoals((prevGoals) => {
       return [...prevGoals, newGoal];
     });
