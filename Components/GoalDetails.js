@@ -2,12 +2,14 @@ import { Button, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import PressableButton from "./PressableButton";
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { updateDB } from "./Firebase/firestoreHelper";
 
 export default function GoalDetails({ navigation, route }) {
   const [warning, setWarning] = useState(false);
   function warningHandler() {
     setWarning(true);
     navigation.setOptions({ title: "Warning!" });
+    updateDB("goals", route.params.goalObj.id, { warning: true });
   }
   useEffect(() => {
     navigation.setOptions({
