@@ -11,13 +11,14 @@ import {
   Pressable,
 } from "react-native";
 import Header from "./Header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
 import { app } from "./Firebase/firebaseSetUp";
 import { database } from "./Firebase/firebaseSetUp";
-import { writeToDB } from "./Firebase/firestoreHelper";
+import { deleteFromDB, writeToDB } from "./Firebase/firestoreHelper";
+import { collection, onSnapshot } from "firebase/firestore";
 
 export default function Home({ navigation }) {
   console.log(database);
@@ -25,20 +26,42 @@ export default function Home({ navigation }) {
   const [goals, setGoals] = useState([]);
   const [selectedGoalId, setSelectedGoalId] = useState(null);
   const appName = "My app";
+
+
+  //querySnapshot is a list of document snapshots. we name it so 
+  //.data() function gets data from document
+  useEffect(() => {
+    onSnapshot(collection(database, 'goals'), (querySnapshot) => {
+      //define an array
+      let goalsArray = [];
+      querySnapshot.forEach((doc)=>{
+        //populate array
+        goalsArray.push({...doc.data(), id: doc.id});
+        console.log(doc.data().id)});
+        //set goals with this array
+        setGoals(goalsArray);
+      });
+  }, []);//one time thing, use square brackets
+
+
+
+
   //update this fn to receive data
   function handleInputData(data) {
     //log the data to console
-    console.log("App ", data);
+    //console.log("App ", data);
     // declare a JS object
-    let newGoal = { text: data, id: Math.random() };
+    let newGoal = { text: data};
     // update the goals array to have newGoal as an item
     //async
     //add newGoal to db, call writeToDB
     writeToDB("goals", newGoal);
 
-    setGoals((prevGoals) => {
+    {/*setGoals((prevGoals) => {
       return [...prevGoals, newGoal];
     });
+    */}
+
     //updated goals is not accessible here
     setIsModalVisible(false);
   }
@@ -52,15 +75,17 @@ export default function Home({ navigation }) {
   //   navigation.navigate("Details", { goalObj: pressedGoal });
   // }
   function goalDeleteHandler(deletedId) {
-    console.log("goal deleted ", deletedId);
+    //console.log("goal deleted ", deletedId);
     //Use array.filter to update the array by removing the deletedId
-
-    setGoals((prevGoals) => {
+    {/*setGoals((prevGoals) => {
       return prevGoals.filter((goal) => {
         return goal.id != deletedId;
       });
     });
+    */}
+    deleteFromDB("goals", deletedId);
   }
+  
   function deleteAll() {
     Alert.alert("Delete All", "Are you sure you want to delete all goals?", [
       {
