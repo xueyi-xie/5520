@@ -15,8 +15,10 @@ import { useState } from "react";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
+import { app } from "./Firebase/firebaseSetUp";
 
 export default function Home({ navigation }) {
+  console.log(app);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
   const [selectedGoalId, setSelectedGoalId] = useState(null);
@@ -67,6 +69,7 @@ export default function Home({ navigation }) {
   }
 
   return (
+    
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.topView}>
