@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import PressableButton from "./PressableButton";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { updateDB } from "./Firebase/firestoreHelper";
+import GoalUsers from "./GoalUsers";
 
 export default function GoalDetails({ navigation, route }) {
   const [warning, setWarning] = useState(false);
@@ -42,6 +43,7 @@ export default function GoalDetails({ navigation, route }) {
           navigation.push("Details");
         }}
       />
+      <GoalUsers goalID={route.params.goalObj.id}/>
     </View>
   );
 }
