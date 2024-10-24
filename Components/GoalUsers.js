@@ -1,15 +1,27 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect } from 'react'
+[user, setUser] = useState([]);
 
 export default function GoalUsers() {
+
     useEffect(() => {
         async function fetchData() {
             try {
             const response = await fetch("https://jsonplaceholder.typicode.com/users");
             console.log(response.status);
+
+            
             if (!response.ok) {
                 throw new Error("HTTP error, status = " + response.status);
             }
+            
+            const data = await response.json();
+            setUsers(
+                data.map((user) => {
+                    return user.name;
+                })
+            );
+
             } catch (e) {
                 console.log("Error fetching data: ", e);
             };
@@ -19,7 +31,9 @@ export default function GoalUsers() {
 
   return (
     <View>
-      <Text>GoalUsers</Text>
+      <FlatList data={users}>
+        renderItem={({item}) => <Text>{item.name}</Text>}
+      </FlatList>
     </View>
   )
 }
