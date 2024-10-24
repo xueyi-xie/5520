@@ -12,12 +12,12 @@ export async function writeToDB(collectionName, data) {
 }
 }
 
-export async function deleteFromDB(collectionName, id) {
+export async function deleteFromDB(collectionName, deletedID) {
   //deleteDoc()
   try {
-    await deleteDoc(doc(database, collectionName, id));
+    await deleteDoc(doc(database, collectionName, deletedID));
     //also delete all docs in the users subcollection
-    deleteAllFromDB(`${collectionName}/${id}/users`);
+    deleteAllFromDB(`goals/${deletedID}/users`);
   } catch (e) {
     console.log("Error deleting document: ", e);
   }
