@@ -4,14 +4,14 @@ import { writeToDB } from './Firebase/firestoreHelper';
 
 
 export default function GoalUsers({goalID}) {
-    [user, setUser] = useState([]);
+    [users, setUsers] = useState([]);
     useEffect(() => {
         async function fetchData() {
             try {
 
-            const dataFromDB = getAllFromDB(`goals/${goalID}/user`);
+            const dataFromDB = getAllFromDB(`goals/${goalID}/users`);
             if (dataFromDB.length) {
-                setUser(
+                setUsers(
                     data.map((user) => {
                         return user.name;
                     })
@@ -19,16 +19,19 @@ export default function GoalUsers({goalID}) {
             return;
             }
             const response = await fetch("https://jsonplaceholder.typicode.com/users");
-            console.log(response.status);
-
             
             if (!response.ok) {
                 throw new Error("HTTP error, status = " + response.status);
             }
+            const data = await response.json();
             data.forEach((user)=>{
-                writeToDB("user", `user${user.id}, user${user.name}`);
-            })
-            
+                writeToDB(`goals/${goalID}/users`, user);
+            });
+            setUsers(
+                data.map((user) => {
+                    return user.name;
+                })
+            );
 
             } catch (e) {
                 console.log("Error fetching data: ", e);
@@ -39,9 +42,10 @@ export default function GoalUsers({goalID}) {
 
   return (
     <View>
-      <FlatList data={user}>
-        renderItem={({item}) => <Text>{item}</Text>}
-      </FlatList>
+      <FlatList 
+        data={users}
+        renderItem={({item}) => {return <Text>{item}</Text>;}}
+      />
     </View>
   )
 }
