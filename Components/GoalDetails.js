@@ -2,7 +2,7 @@ import { Button, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import PressableButton from "./PressableButton";
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { updateDB } from "./Firebase/firestoreHelper";
+import { updateDB, getAllFromDB } from "./Firebase/firestoreHelper";
 import GoalUsers from "./GoalUsers";
 
 export default function GoalDetails({ navigation, route }) {
