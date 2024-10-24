@@ -1,17 +1,17 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { writeToDB } from './Firebase/firestoreHelper';
-[user, setUser] = useState([]);
+
 
 export default function GoalUsers({goalID}) {
-
+    [user, setUser] = useState([]);
     useEffect(() => {
         async function fetchData() {
             try {
 
-            const dataFromDB = getAllFromDB(`goals/${goalID}/users`);
+            const dataFromDB = getAllFromDB(`goals/${goalID}/user`);
             if (dataFromDB.length) {
-                setUsers(
+                setUser(
                     data.map((user) => {
                         return user.name;
                     })
@@ -25,8 +25,8 @@ export default function GoalUsers({goalID}) {
             if (!response.ok) {
                 throw new Error("HTTP error, status = " + response.status);
             }
-            data.forEach((users)=>{
-                writeToDB("users", `users${users.id}, users${users.name}`);
+            data.forEach((user)=>{
+                writeToDB("user", `user${user.id}, user${user.name}`);
             })
             
 
@@ -39,8 +39,8 @@ export default function GoalUsers({goalID}) {
 
   return (
     <View>
-      <FlatList data={users}>
-        renderItem={({item}) => <Text>{item.name}</Text>}
+      <FlatList data={user}>
+        renderItem={({item}) => <Text>{item}</Text>}
       </FlatList>
     </View>
   )

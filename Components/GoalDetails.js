@@ -43,7 +43,7 @@ export default function GoalDetails({ navigation, route }) {
           navigation.push("Details");
         }}
       />
-      <GoalUsers goalID={route.params.goalObj.id}/>
+      {route.params && <GoalUsers goalID={route.params.goalObj.id}/>}
     </View>
   );
 }
