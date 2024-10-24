@@ -2,6 +2,7 @@ import { collection, doc, addDoc, deleteDoc, getDocs, updateDoc} from "firebase/
 import { database } from "./firebaseSetUp";
 
 
+
 export async function writeToDB(collectionName, data) {
   //addDoc()
   try {
@@ -15,6 +16,8 @@ export async function deleteFromDB(collectionName, id) {
   //deleteDoc()
   try {
     await deleteDoc(doc(database, collectionName, id));
+    //also delete all docs in the users subcollection
+    deleteAllFromDB(`${collectionName}/${id}/users`);
   } catch (e) {
     console.log("Error deleting document: ", e);
   }
@@ -38,5 +41,18 @@ export async function updateDB(collectionName, id, data) {
     await updateDoc(docRef, data);
   } catch (e) { 
     console.log("Error updating document: ", e);
+  }
+}
+
+export async function getAllFromDB(collectionName) {
+  try {
+    const querySnapshot = await getDocs(collection(database, collectionName));
+    let newArray = [];
+    querySnapshot.forEach((doc) => {
+      newArray.push(doc.data());
+    });
+    return newArray;
+  } catch (e) {
+    console.log("Error getting documents: ", e);
   }
 }
