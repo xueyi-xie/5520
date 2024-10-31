@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Alert} from 'react-native'
 import React from 'react'
 
 export default function Signup({navigation}) {
@@ -9,7 +9,29 @@ export default function Signup({navigation}) {
         navigation.replace('Login');
     };
 
-    const signupHandler = async () => {};
+    const signupHandler = async () => {
+        try{
+            if (password !== confirmPassword) {
+                Alert.alert("Passwords do not match");
+                return;
+            }
+            if (
+                email.Length === 0 ||
+                password.Length === 0 ||
+                confirmPassword.Length === 0
+            ) {
+                Alert.alert("Please fill in all fields");
+                return;
+            }
+            const userCredential = await createUserWithEmailAndPassword(
+                password
+            );
+        } catch (e) {
+            console.log("Error signing up: ", e);
+            Alert.alert("Error signing up: ", e);
+        }
+    };
+
 
   return (
     <View style={styles.container}>
