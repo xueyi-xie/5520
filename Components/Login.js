@@ -32,6 +32,8 @@ export default function Login() {
         setPassword(changedText);
       }}
     />
+    <Button title="Login" onPress={loginHandler} />
+    <Button title="New User? Create An Account" onPress={signupHandler} />
     </View>
   )
 }
