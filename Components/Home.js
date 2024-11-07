@@ -21,27 +21,29 @@ import { deleteAllFromDB, deleteFromDB, writeToDB } from "../Firebase/firestoreH
 import { collection, getDocs, onSnapshot } from "firebase/firestore";
 
 export default function Home({ navigation }) {
-  console.log(database);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
   const [selectedGoalId, setSelectedGoalId] = useState(null);
   const appName = "My app";
 
-
   //querySnapshot is a list of document snapshots. we name it so 
   //.data() function gets data from document
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(database, 'goals'), (querySnapshot) => {
+    const unsubscribe = onSnapshot(
+      query(collection(database, collectionName), 
+      where ("owner", "==", auth.currentUser.uid)),
+      (querySnapshot) => {
       //define an array
       let goalsArray = [];
       querySnapshot.forEach((doc)=>{
-        //populate array
         goalsArray.push({...doc.data(), id: doc.id});
         console.log(doc.data().id)});
-        //set goals with this array
         setGoals(goalsArray);
-
+      }, 
+        (error) => {console.log(error);
+        Alert.alert("Error", "Something went wrong", [{text: "OK"}]);
       });
+
       //detach listener
       //forgot to switch branch before pushing
       return () => unsubscribe();
@@ -54,9 +56,7 @@ export default function Home({ navigation }) {
   //update this fn to receive data
   function handleInputData(data) {
     let newGoal = { text: data};
-    // update the goals array to have newGoal as an item
-    //async
-    //add newGoal to db, call writeToDB
+    newGoal = { ...newGoal, owner: auth.currentUser.uid };
     writeToDB("goals", newGoal);
 
     {/*setGoals((prevGoals) => {
@@ -152,15 +152,7 @@ export default function Home({ navigation }) {
           )}
           
         />
-        {/* <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          {goals.map((goalObj) => {
-            return (
-              <View key={goalObj.id} style={styles.textContainer}>
-                <Text style={styles.text}>{goalObj.text}</Text>
-              </View>
-            );
-          })}
-        </ScrollView> */}
+      
       </View>
     </SafeAreaView>
   );
