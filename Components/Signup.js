@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
-import { auth } from "../Firebase/firebaseSetup";
+import { auth } from "../Firebase/firebaseSetUp";
 
 export default function Signup({ navigation }) {
   const [email, setEmail] = useState("");

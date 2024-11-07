@@ -15,9 +15,9 @@ import { useEffect, useState } from "react";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
-import { app } from "./Firebase/firebaseSetUp";
-import { database } from "./Firebase/firebaseSetUp";
-import { deleteAllFromDB, deleteFromDB, writeToDB } from "./Firebase/firestoreHelper";
+import { app } from "../Firebase/firebaseSetUp";
+import { database } from "../Firebase/firebaseSetUp";
+import { deleteAllFromDB, deleteFromDB, writeToDB } from "../Firebase/firestoreHelper";
 import { collection, getDocs, onSnapshot } from "firebase/firestore";
 
 export default function Home({ navigation }) {

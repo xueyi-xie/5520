@@ -7,11 +7,11 @@ import { Button } from "react-native";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./Firebase/firebaseSetup";
-import Profile from "./Components/Profile";
+ import Profile from "./Components/Profile";
 import PressableButton from "./Components/PressableButton";
 const Stack = createNativeStackNavigator();
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { auth } from "./Firebase/firebaseSetUp";
 
 const AuthStack = (
   <>
