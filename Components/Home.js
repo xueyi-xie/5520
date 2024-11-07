@@ -19,6 +19,7 @@ import { app } from "../Firebase/firebaseSetUp";
 import { auth, database } from "../Firebase/firebaseSetUp";
 import { deleteAllFromDB, deleteFromDB, writeToDB } from "../Firebase/firestoreHelper";
 import { collection, getDocs, onSnapshot, query, where} from "firebase/firestore";
+import { ref } from "firebase/storage";
 
 export default function Home({ navigation }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -51,10 +52,28 @@ export default function Home({ navigation }) {
   }, []);//one time thing, use square brackets
 
 
-
+  async function handleImageData(uri) {
+    try {
+      const response = await fetch(uri);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const blob = await response.blob();
+      const imageName = uri.substring(uri.lastIndexOf('/') + 1);
+      const imageRef = await ref(storage, `images/${imageName}`)
+      const uploadResult = await uploadBytesResumable(imageRef, blob);
+      console.log("Upload result: ", uploadResult);
+    } catch (error) {
+      console.error("Error fetching image: ", error);
+    }
+    
+  }
 
   //update this fn to receive data
   function handleInputData(data) {
+    if (data.imageUri) {
+      handleImageData(data.imageUri);
+    }
     let newGoal = { text: data.text};
     newGoal = { ...newGoal, owner: auth.currentUser.uid };
     writeToDB("goals", newGoal);
