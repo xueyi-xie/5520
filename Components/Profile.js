@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { auth } from "../Firebase/firebaseSetup";
+import { auth } from "../Firebase/firebaseSetUp";
 
 export default function Profile() {
   // read auth.currentUser
