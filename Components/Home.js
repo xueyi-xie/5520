@@ -23,7 +23,6 @@ import { collection, getDocs, onSnapshot, query, where} from "firebase/firestore
 export default function Home({ navigation }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
-  const [selectedGoalId, setSelectedGoalId] = useState(null);
   const appName = "My app";
   const collectionName = "goals";
 
@@ -38,7 +37,7 @@ export default function Home({ navigation }) {
       let goalsArray = [];
       querySnapshot.forEach((doc)=>{
         goalsArray.push({...doc.data(), id: doc.id});
-        console.log(doc.data().id)});
+      });
         setGoals(goalsArray);
       }, 
         (error) => {console.log(error);
@@ -56,14 +55,9 @@ export default function Home({ navigation }) {
 
   //update this fn to receive data
   function handleInputData(data) {
-    let newGoal = { text: data};
+    let newGoal = { text: data.text};
     newGoal = { ...newGoal, owner: auth.currentUser.uid };
     writeToDB("goals", newGoal);
-
-    {/*setGoals((prevGoals) => {
-      return [...prevGoals, newGoal];
-    });
-    */}
 
     //updated goals is not accessible here
     setIsModalVisible(false);

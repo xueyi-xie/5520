@@ -19,7 +19,7 @@ export default function Input({
 }) {
   const [text, setText] = useState("");
   const [blur, setBlur] = useState(false);
-  const [imgUri, setImgUri] = useState(null);
+  const [imgUri, setImgUri] = useState("");
   const minimumChar = 3;
 
 
@@ -32,7 +32,7 @@ export default function Input({
   function handleConfirm() {
     // call the callback fn received from App.js
     // pass what user has typed
-    inputHandler(text);
+    inputHandler({text, imgUri});
     setText("");
   }
   function handleCancel() {
@@ -89,6 +89,7 @@ export default function Input({
             text && <Text>{text.length}</Text>
           )}
           <ImageManager 
+            receiveImageUri={receiveImageUri}
           />
           <View style={styles.buttonsRow}>
             <View style={styles.buttonContainer}>
