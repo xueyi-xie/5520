@@ -19,10 +19,15 @@ export default function Input({
 }) {
   const [text, setText] = useState("");
   const [blur, setBlur] = useState(false);
+  const [imgUri, setImgUri] = useState(null);
   const minimumChar = 3;
+
 
   function updateText(changedText) {
     setText(changedText);
+  }
+  function receiveImageUri(uri) {
+    setImgUri(uri);
   }
   function handleConfirm() {
     // call the callback fn received from App.js
@@ -83,7 +88,8 @@ export default function Input({
           ) : (
             text && <Text>{text.length}</Text>
           )}
-          <ImageManager />
+          <ImageManager 
+          />
           <View style={styles.buttonsRow}>
             <View style={styles.buttonContainer}>
               <Button title="Cancel" onPress={handleCancel} />
