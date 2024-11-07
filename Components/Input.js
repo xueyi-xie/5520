@@ -9,6 +9,7 @@ import {
   Alert,
 } from "react-native";
 import React, { useState } from "react";
+import ImageManager from "./ImageManager";
 
 export default function Input({
   textInputFocus,
@@ -82,6 +83,7 @@ export default function Input({
           ) : (
             text && <Text>{text.length}</Text>
           )}
+          <ImageManager />
           <View style={styles.buttonsRow}>
             <View style={styles.buttonContainer}>
               <Button title="Cancel" onPress={handleCancel} />
