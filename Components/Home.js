@@ -16,15 +16,16 @@ import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
 import { app } from "../Firebase/firebaseSetUp";
-import { database } from "../Firebase/firebaseSetUp";
+import { auth, database } from "../Firebase/firebaseSetUp";
 import { deleteAllFromDB, deleteFromDB, writeToDB } from "../Firebase/firestoreHelper";
-import { collection, getDocs, onSnapshot } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, query, where} from "firebase/firestore";
 
 export default function Home({ navigation }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
   const [selectedGoalId, setSelectedGoalId] = useState(null);
   const appName = "My app";
+  const collectionName = "goals";
 
   //querySnapshot is a list of document snapshots. we name it so 
   //.data() function gets data from document
