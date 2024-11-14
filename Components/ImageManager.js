@@ -1,53 +1,61 @@
-import { StyleSheet, Text, View, Button } from 'react-native'
-import React from 'react'
-import * as ImagePicker from 'expo-image-picker';
+import { Alert, Button, Image, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+// import { launchCameraAsync } from "expo-image-picker";
+import * as ImagePicker from "expo-image-picker";
 
-export default function ImageManager({receiveImageUri}) {
-    const [imgUri, setImgUri] = React.useState(null);
-    const [response, requestPermission] = ImagePicker.useCameraPermissions();
-    async function verifyPermissions() {
-        try {
-        if (response.granted) {
-            return true;
-        }
-        const permissionResponse = await requestPermission();
-        return permissionResponse.granted;
-    } catch (error) {
-        console.log(error);
-        return false
+export default function ImageManager({ receiveImageUri }) {
+  const [response, requestPermission] = ImagePicker.useCameraPermissions();
+  const [imageUri, setImageUri] = useState("");
+  async function verifyPermission() {
+    //check if user has granted permission return true
+    try {
+      if (response.granted) {
+        return true;
+      }
+      const permissionResponse = await requestPermission();
+      //else ask for permission
+      //return the granted property of the response
+      return permissionResponse.granted;
+    } catch (err) {
+      console.log("verify permission ", err);
     }
-}
-
-    const takeImageHandler = async () => {
-        try {
-            const hasPermission = await verifyPermissions();
-            if (!hasPermission) {
-                Alert.alert("Permission needed");
-                return;
-            }
-            const result = await ImagePicker.launchCameraAsync({
-                allowsEditing: true,
-            });
-            if (!result.canceled) {
-                setImgUri(result.assets[0].uri);
-                receiveImageUri(result.assets[0].uri);
-                
-            }
-        } catch (error) {
-            console.log(error);
-        }
+  }
+  async function takeImageHandler() {
+    try {
+      // call verify permission and only proceed to open camera if you have permission
+      const hasPermission = await verifyPermission();
+      if (!hasPermission) {
+        Alert.alert("You need to give camera permission");
+        return;
+      }
+      const result = await ImagePicker.launchCameraAsync({
+        allowsEditing: true,
+      });
+      if (!result.canceled) {
+        setImageUri(result.assets[0].uri);
+        //imageUri is still empty string
+        receiveImageUri(result.assets[0].uri);
+      }
+    } catch (err) {
+      console.log("take an image", err);
     }
-
+  }
   return (
     <View>
-      <Button 
-      title = "take an image" 
-      onPress={takeImageHandler}/>
+      <Button title="Take an Image" onPress={takeImageHandler} />
+      {imageUri && (
+        <Image
+          source={{
+            uri: imageUri,
+          }}
+          style={styles.image}
+          alt="preview of the image user has taken"
+        />
+      )}
     </View>
-  )
+  );
 }
 
-
 const styles = StyleSheet.create({
-    image: { width: 100, height: 100 },
-})
+  image: { width: 100, height: 100 },
+});

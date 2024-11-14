@@ -56,56 +56,61 @@ export default function Home({ navigation }) {
 
   async function handleImageData(uri) {
     try {
+      //fetch the image data
       const response = await fetch(uri);
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error(`fetch error happened with status ${response.status}`);
       }
       const blob = await response.blob();
-      const imageName = uri.substring(uri.lastIndexOf('/') + 1);
-      const imageRef = await ref(storage, `images/${imageName}`)
+      const imageName = uri.substring(uri.lastIndexOf("/") + 1);
+      const imageRef = ref(storage, `images/${imageName}`);
       const uploadResult = await uploadBytesResumable(imageRef, blob);
-      console.log("Upload result: ", uploadResult);
-    } catch (error) {
-      console.error("Error fetching image: ", error);
+      console.log(uploadResult);
+    } catch (err) {
+      console.log("handle Image data ", err);
     }
-    
   }
 
   //update this fn to receive data
   function handleInputData(data) {
+    //log the data to console
+    console.log("App ", data);
     if (data.imageUri) {
       handleImageData(data.imageUri);
     }
-    let newGoal = { text: data.text};
+    // declare a JS object
+    let newGoal = { text: data.text };
     newGoal = { ...newGoal, owner: auth.currentUser.uid };
-    writeToDB("goals", newGoal);
+    // add the newGoal to db
+    //call writeToDB
+    writeToDB(newGoal, collectionName);
 
+    // update the goals array to have newGoal as an item
+    //async
+
+    // setGoals((prevGoals) => {
+    //   return [...prevGoals, newGoal];
+    // });
     //updated goals is not accessible here
-    setIsModalVisible(false);
-  }
-  function dismissModal() {
     setIsModalVisible(false);
   }
 
 
   function goalDeleteHandler(deletedId) {
-
     deleteFromDB("goals", deletedId);
   }
 
   function deleteAll() {
-    {/*}
     Alert.alert("Delete All", "Are you sure you want to delete all goals?", [
       {
         text: "Yes",
         onPress: () => {
-          setGoals([]);
+          // setGoals([]);
+          deleteAllFromDB(collectionName);
         },
       },
       { text: "No", style: "cancel" },
     ]);
-    */}
-  deleteAllFromDB("goals");
   }
 
   return (
@@ -121,12 +126,7 @@ export default function Home({ navigation }) {
         >
           <Text>Add a Goal</Text>
         </PressableButton>
-        {/*<Button
-          title="Add a Goal"
-          onPress={() => {
-            setIsModalVisible(true);
-          }}
-        />*/}
+  
       </View>
       <Input
         textInputFocus={true}
