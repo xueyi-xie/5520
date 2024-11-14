@@ -45,26 +45,42 @@ const AppStack = (
         };
       }}
     />
+
     <Stack.Screen
       name="Details"
       component={GoalDetails}
       options={({ navigation, route }) => {
         return {
           title: route.params ? route.params.goalObj.text : "More Details",
-          // headerRight: () => {
-          //   return (
-          //     <Button
-          //       title="Warning"
-          //       onPress={() => {
-          //         console.log("warning");
-          //       }}
-          //     />
-          //   );
-          // },
         };
       }}
     />
-    <Stack.Screen name="Profile" component={Profile} />
+    <Stack.Screen
+      name="Profile"
+      component={Profile}
+      options={({ navigation }) => {
+        return {
+          headerRight: () => {
+            // render a button icon to navigate to Profile
+            return (
+              <PressableButton
+                pressedFunction={() => {
+                  try {
+                    signOut(auth);
+                  } catch (err) {
+                    console.log("sign out ", err);
+                  }
+                }}
+                componentStyle={{ backgroundColor: "purple" }}
+              >
+                <AntDesign name="logout" size={24} color="white" />
+              </PressableButton>
+            );
+          },
+        };
+      }}
+    />
+
     <Stack.Screen name="Map" component={Map} />
   </>
 );
@@ -72,8 +88,8 @@ export default function App() {
   const [isUserLoggedIn, SetIsUserLoggedIn] = useState(false);
   useEffect(() => {
     //set up auth listener
-    onAuthStateChanged(auth, (user) => {
-      console.log(user);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log("listener ", user);
       // if user is not logged in we receive null
       // else we receive user data
       if (user) {
@@ -82,6 +98,9 @@ export default function App() {
         SetIsUserLoggedIn(false);
       }
     });
+    return () => {
+      unsubscribe();
+    };
   }, []);
   return (
     <NavigationContainer>
