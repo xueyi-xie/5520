@@ -15,15 +15,7 @@ const firebaseConfig = {
   appId: process.env.EXPO_PUBLIC_appId,
 };
 console.log(firebaseConfig);
-// const firebaseConfig = {
-//   apiKey: "AIzaSyDYQG3bC8wrm78bo6-wjZZfmKvACPoxdNA",
-//   authDomain: "project-4836269972286322047.firebaseapp.com",
-//   projectId: "project-4836269972286322047",
-//   storageBucket: "project-4836269972286322047.firebasestorage.app",
-//   messagingSenderId: "158743138348",
-//   appId: "1:158743138348:web:1c799caefe3c6217ddc189"
-// };
-// Initialize Firebase
+
 const app = initializeApp(firebaseConfig);
 export const database = getFirestore(app);
 export const auth = initializeAuth(app, {
