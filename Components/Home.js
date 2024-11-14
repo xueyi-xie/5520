@@ -11,12 +11,10 @@ import {
   Pressable,
 } from "react-native";
 import Header from "./Header";
-import { useEffect, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
-import { database } from "../Firebase/firebaseSetUp";
-import { deleteAllFromDB, deleteFromDB, writeToDB } from "../Firebase/firestoreHelper";
 import { app } from "../Firebase/firebaseSetUp";
 import { auth, database } from "../Firebase/firebaseSetUp";
 import { deleteAllFromDB, deleteFromDB, writeToDB } from "../Firebase/firestoreHelper";
