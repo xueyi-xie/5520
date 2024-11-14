@@ -18,6 +18,7 @@ import PressableButton from "./PressableButton";
 import { app } from "../Firebase/firebaseSetUp";
 import { auth, database } from "../Firebase/firebaseSetUp";
 import { deleteAllFromDB, deleteFromDB, writeToDB } from "../Firebase/firestoreHelper";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { ref } from "firebase/storage";
 
 export default function Home({ navigation }) {
@@ -90,9 +91,12 @@ export default function Home({ navigation }) {
     //   return [...prevGoals, newGoal];
     // });
     //updated goals is not accessible here
+   
+  }
+  
+  function dismissModal() {
     setIsModalVisible(false);
   }
-
 
   function goalDeleteHandler(deletedId) {
     deleteFromDB("goals", deletedId);
