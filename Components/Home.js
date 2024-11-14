@@ -31,26 +31,30 @@ export default function Home({ navigation }) {
   //querySnapshot is a list of document snapshots. we name it so 
   //.data() function gets data from document
   useEffect(() => {
+    //querySnapshot is a list/array of documentSnapshots
     const unsubscribe = onSnapshot(
-      query(collection(database, collectionName), 
-      where ("owner", "==", auth.currentUser.uid)),
+      query(
+        collection(database, collectionName),
+        where("owner", "==", auth.currentUser.uid)
+      ),
       (querySnapshot) => {
-      //define an array
-      let goalsArray = [];
-      querySnapshot.forEach((doc)=>{
-        goalsArray.push({...doc.data(), id: doc.id});
-      });
-        setGoals(goalsArray);
-      }, 
-        (error) => {console.log(error);
-        Alert.alert("Error", "Something went wrong", [{text: "OK"}]);
-      });
-
-      //detach listener
-      //forgot to switch branch before pushing
-      return () => unsubscribe();
-
-  }, []);//one time thing, use square brackets
+        //define an array
+        let newArray = [];
+        querySnapshot.forEach((docSnapshot) => {
+          //populate the array
+          newArray.push({ ...docSnapshot.data(), id: docSnapshot.id });
+          console.log(docSnapshot.id);
+        });
+        //setGoals with this array
+        setGoals(newArray);
+      },
+      (error) => {
+        console.log("on snapshot ", error);
+        Alert.alert(error.message);
+      }
+    );
+    return () => unsubscribe();
+  }, []);
 
 
   async function handleImageData(uri) {
@@ -82,7 +86,7 @@ export default function Home({ navigation }) {
     newGoal = { ...newGoal, owner: auth.currentUser.uid };
     // add the newGoal to db
     //call writeToDB
-    writeToDB(newGoal, collectionName);
+    writeToDB(collectionName, newGoal);
 
     // update the goals array to have newGoal as an item
     //async

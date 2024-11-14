@@ -2,7 +2,8 @@ import { Alert, Button, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 // import { getCurrentPositionAsync } from "expo-location";
 import * as Location from "expo-location";
-import { verifyPermission } from "./ImageManager";
+//import { verifyPermission } from "./ImageManager";
+const windowWidth = Dimensions.get("window").width;
 
 export default function LocationManager() {
   const [location, setLocation] = useState(null);
@@ -39,9 +40,16 @@ export default function LocationManager() {
       console.log("locate user ", err);
     }
   }
+  function chooseLocationHandler({navigation}) {
+    //navigate to Map.js
+    //add map.js to app stack
+    navigation.navigate("Map");
+    }
+
   return (
     <View>
       <Button title="Locate Me" onPress={locateUserHandler} />
+      <Button title="Choose Location" onPress={chooseLocationHandler} />
       {location && (
         <Image
           source={{
@@ -55,4 +63,6 @@ export default function LocationManager() {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    map: { width: windowWidth, height: 200 },
+});

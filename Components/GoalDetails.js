@@ -1,7 +1,7 @@
 import { Button, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import PressableButton from "./PressableButton";
-import AntDesign from '@expo/vector-icons/AntDesign';
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { updateDB, getAllFromDB } from "../Firebase/firestoreHelper";
 import GoalUsers from "./GoalUsers";
 import { getDownloadURL, ref } from "firebase/storage";
@@ -21,7 +21,7 @@ export default function GoalDetails({ navigation, route }) {
         return (
           <PressableButton
             pressFunction={warningHandler}
-            componentStyle={{backgroundColor: "blue"}}
+            componentStyle={{ backgroundColor: "blue" }}
             pressedStyle={styles.warningStyle}
           >
             <AntDesign name="warning" size={24} color="white" />
@@ -81,5 +81,5 @@ const styles = StyleSheet.create({
   image: {
     height: 100,
     width: 100,
-  }
+  },
 });

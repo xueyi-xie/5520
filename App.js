@@ -3,6 +3,7 @@ import Home from "./Components/Home";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import GoalDetails from "./Components/GoalDetails";
+import Map from "./Components/Map";
 import { Button } from "react-native";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
@@ -64,6 +65,7 @@ const AppStack = (
       }}
     />
     <Stack.Screen name="Profile" component={Profile} />
+    <Stack.Screen name="Map" component={Map} />
   </>
 );
 export default function App() {
