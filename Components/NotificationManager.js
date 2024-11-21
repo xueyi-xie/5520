@@ -82,7 +82,7 @@ import {
     function saveLocationHandler() {
       //use a function from firestoreHelper to setDoc with id:auth.currentUser.uid
       try {
-        updateDB(auth.currentUser.uid, { location }, "users");
+        updateDB("users", auth.currentUser.uid, { location });
         navigation.navigate("Home");
       } catch (err) {
         console.log("save location ", err);
