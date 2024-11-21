@@ -18,7 +18,7 @@ import PressableButton from "./PressableButton";
 import { app } from "../Firebase/firebaseSetUp";
 import { auth, database } from "../Firebase/firebaseSetUp";
 import { deleteAllFromDB, deleteFromDB, writeToDB } from "../Firebase/firestoreHelper";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, query, where} from "firebase/firestore";
 import { ref } from "firebase/storage";
 
 export default function Home({ navigation }) {
@@ -31,69 +31,54 @@ export default function Home({ navigation }) {
   //querySnapshot is a list of document snapshots. we name it so 
   //.data() function gets data from document
   useEffect(() => {
-    //querySnapshot is a list/array of documentSnapshots
     const unsubscribe = onSnapshot(
-      query(
-        collection(database, collectionName),
-        where("owner", "==", auth.currentUser.uid)
-      ),
+      query(collection(database, collectionName), 
+      where ("owner", "==", auth.currentUser.uid)),
       (querySnapshot) => {
-        //define an array
-        let newArray = [];
-        querySnapshot.forEach((docSnapshot) => {
-          //populate the array
-          newArray.push({ ...docSnapshot.data(), id: docSnapshot.id });
-          console.log(docSnapshot.id);
-        });
-        //setGoals with this array
-        setGoals(newArray);
-      },
-      (error) => {
-        console.log("on snapshot ", error);
-        Alert.alert(error.message);
-      }
-    );
-    return () => unsubscribe();
-  }, []);
+      //define an array
+      let goalsArray = [];
+      querySnapshot.forEach((doc)=>{
+        goalsArray.push({...doc.data(), id: doc.id});
+      });
+        setGoals(goalsArray);
+      }, 
+        (error) => {console.log(error);
+        Alert.alert("Error", "Something went wrong", [{text: "OK"}]);
+      });
+
+      //detach listener
+      //forgot to switch branch before pushing
+      return () => unsubscribe();
+
+  }, []);//one time thing, use square brackets
 
 
   async function handleImageData(uri) {
     try {
-      //fetch the image data
       const response = await fetch(uri);
       if (!response.ok) {
-        throw new Error(`fetch error happened with status ${response.status}`);
+        throw new Error("Network response was not ok");
       }
       const blob = await response.blob();
-      const imageName = uri.substring(uri.lastIndexOf("/") + 1);
-      const imageRef = ref(storage, `images/${imageName}`);
+      const imageName = uri.substring(uri.lastIndexOf('/') + 1);
+      const imageRef = await ref(storage, `images/${imageName}`)
       const uploadResult = await uploadBytesResumable(imageRef, blob);
-      console.log(uploadResult);
-    } catch (err) {
-      console.log("handle Image data ", err);
+      console.log("Upload result: ", uploadResult);
+    } catch (error) {
+      console.error("Error fetching image: ", error);
     }
+    
   }
 
   //update this fn to receive data
   function handleInputData(data) {
-    //log the data to console
-    console.log("App ", data);
     if (data.imageUri) {
       handleImageData(data.imageUri);
     }
-    // declare a JS object
-    let newGoal = { text: data.text };
+    let newGoal = { text: data.text};
     newGoal = { ...newGoal, owner: auth.currentUser.uid };
-    // add the newGoal to db
-    //call writeToDB
-    writeToDB(collectionName, newGoal);
+    writeToDB("goals", newGoal);
 
-    // update the goals array to have newGoal as an item
-    //async
-
-    // setGoals((prevGoals) => {
-    //   return [...prevGoals, newGoal];
-    // });
     //updated goals is not accessible here
    
   }
@@ -102,11 +87,14 @@ export default function Home({ navigation }) {
     setIsModalVisible(false);
   }
 
+
   function goalDeleteHandler(deletedId) {
+
     deleteFromDB("goals", deletedId);
   }
 
   function deleteAll() {
+    {/*}
     Alert.alert("Delete All", "Are you sure you want to delete all goals?", [
       {
         text: "Yes",
@@ -117,6 +105,8 @@ export default function Home({ navigation }) {
       },
       { text: "No", style: "cancel" },
     ]);
+    */}
+  deleteAllFromDB("goals");
   }
 
   return (

@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Home from "./Components/Home";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import GoalDetails from "./Components/GoalDetails";
 import Map from "./Components/Map";
 import { Button } from "react-native";
+import Login from "./Components/Login";
+import Signup from "./Components/Signup";
+import { onAuthStateChanged } from "firebase/auth";
+ import Profile from "./Components/Profile";
+import PressableButton from "./Components/PressableButton";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
 import { onAuthStateChanged } from "firebase/auth";
