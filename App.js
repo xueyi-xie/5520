@@ -33,8 +33,9 @@ const AppStack = (
             // render a button icon to navigate to Profile
             return (
               <PressableButton
-                pressedFunction={() => {
+              pressFunction={() => {
                   navigation.navigate("Profile");
+                  console.log("profile icon clicked");
                 }}
                 componentStyle={{ backgroundColor: "purple" }}
               >
